@@ -1,5 +1,7 @@
 package org.openclassrooms.chatop.user.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 import org.openclassrooms.chatop.user.repository.UserDetailRepository;
@@ -13,10 +15,12 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
+@Tag(name = "User details")
 public class UserDetailController {
 
   private UserDetailRepository userDetailRepository;
 
+  @Operation(summary = "This method is used to get user details by id")
   @GetMapping("/user/{id}")
   public ResponseEntity<UserDetailEntity> getUserDetailById(@PathVariable String id) {
     Optional<UserDetailEntity> userOptional = userDetailRepository.findById(UUID.fromString(id));

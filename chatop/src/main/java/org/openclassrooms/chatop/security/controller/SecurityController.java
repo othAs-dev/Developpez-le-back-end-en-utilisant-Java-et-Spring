@@ -1,5 +1,7 @@
 package org.openclassrooms.chatop.security.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.openclassrooms.chatop.security.DTO.LoginDTO;
 import org.openclassrooms.chatop.security.DTO.RegisterDTO;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/auth")
 @AllArgsConstructor
+@Tag(name = "Security")
 public class SecurityController {
 
   private final AuthenticationManager authenticationManager;
@@ -29,6 +32,7 @@ public class SecurityController {
   private final UserDetailRepository userDetailRepository;
   private final UserService userService;
 
+  @Operation(summary = "This method is used to login")
   @PostMapping("/login")
   public Map<String, String> login(@RequestBody LoginDTO loginRequest) {
     Authentication authentication = authenticationManager.authenticate(
@@ -53,6 +57,7 @@ public class SecurityController {
     return Map.of("token", jwt);
   }
 
+  @Operation(summary = "This method is used to register")
   @PostMapping("/register")
   public UserDetailEntity register(@RequestBody RegisterDTO registerRequest) {
     return userService.addNewUser(
@@ -62,6 +67,7 @@ public class SecurityController {
     );
   }
 
+  @Operation(summary = "This method is used to get user details who is logged in")
   @GetMapping("/me")
   public UserDetailEntity getUserDetails(Authentication authentication) {
     String email = authentication.getName();

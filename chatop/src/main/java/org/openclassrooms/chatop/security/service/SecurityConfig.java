@@ -41,6 +41,11 @@ public class SecurityConfig {
     this.userDetailServiceImpl = userDetailServiceImpl;
   }
 
+  private static final String[] WHITE_LIST_URL = {"/auth/login",
+    "/auth/register", "/v2/api-docs", "/v3/api-docs",
+    "/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
+     "/swagger-ui/**", "/swagger-ui.html", "/api/auth/**",};
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -51,7 +56,7 @@ public class SecurityConfig {
     return http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
       .csrf(csrf -> csrf.disable())
       .cors(Customizer.withDefaults())
-      .authorizeHttpRequests(ar -> ar.requestMatchers("/auth/login", "/auth/register").permitAll())
+      .authorizeHttpRequests(ar -> ar.requestMatchers(WHITE_LIST_URL).permitAll())
       .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
       .oauth2ResourceServer(oa -> oa.jwt(Customizer.withDefaults()))
       .userDetailsService(userDetailServiceImpl)
@@ -87,4 +92,5 @@ public class SecurityConfig {
     source.registerCorsConfiguration("/**", corsConfiguration);
     return source;
   }
+
 }
