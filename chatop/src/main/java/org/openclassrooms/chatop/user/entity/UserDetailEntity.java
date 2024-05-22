@@ -1,10 +1,14 @@
 package org.openclassrooms.chatop.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.validation.constraints.*;
-import lombok.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+import utils.entity.BaseEntity;
+
 import java.util.UUID;
 
 @Getter
@@ -14,7 +18,7 @@ import java.util.UUID;
 @Table(name = "user_detail")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetailEntity {
+public class UserDetailEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)

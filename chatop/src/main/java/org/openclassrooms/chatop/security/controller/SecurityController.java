@@ -65,5 +65,4 @@ public class SecurityController {
     String username = authentication.getName();
     return userDetailRepository.findByUsername(username);
   }
-
 }

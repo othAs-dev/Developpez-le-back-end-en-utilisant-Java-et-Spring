@@ -1,4 +1,4 @@
-package org.openclassrooms.chatop.security;
+package org.openclassrooms.chatop.security.service;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.openclassrooms.chatop.user.service.UserDetailService;

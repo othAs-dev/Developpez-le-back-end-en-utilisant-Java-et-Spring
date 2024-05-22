@@ -4,8 +4,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/chatop
-    username: user
-    password: pass
+    username: ${USERNAME_POSTGRES}
+    password: ${PASSWORD_POSTGRES}
   sql:
     init:
       mode: always
@@ -14,4 +14,4 @@ spring:
       ddl-auto: create-drop
 
 jwt:
-  secret: "A0B1C2D3E4F5A6B7C8D9E0F1A2B3C4D5E6F7A8B9C0D1E2F3A4B5C6D7E8F9A0B1C2D3E4F5A6B7C8D9E0F1A2B3C4D5"
+  secret: ${JWT_SECRET}

@@ -3,6 +3,8 @@ package org.openclassrooms.chatop.user.repository;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDetailRepository extends JpaRepository<UserDetailEntity, String> {
+import java.util.UUID;
+
+public interface UserDetailRepository extends JpaRepository<UserDetailEntity, UUID> {
   UserDetailEntity findByUsername(String username);
 }
