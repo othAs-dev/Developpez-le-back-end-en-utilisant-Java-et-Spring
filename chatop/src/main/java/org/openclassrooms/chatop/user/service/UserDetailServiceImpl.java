@@ -15,11 +15,11 @@ public class UserDetailServiceImpl implements UserDetailService {
   private UserService userService;
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserDetailEntity user = userService.loadUserByUsername(username);
-    if (user == null) throw new UsernameNotFoundException(String.format("User with username %s not found", username));
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    UserDetailEntity user = userService.loadUserByUsername(email);
+    if (user == null) throw new UsernameNotFoundException(String.format("User with email %s not found", email));
     return User
-      .withUsername(user.getUsername())
+      .withUsername(user.getEmail())
       .password(user.getPassword())
       .build();
   }

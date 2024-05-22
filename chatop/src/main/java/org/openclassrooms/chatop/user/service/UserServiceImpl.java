@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserDetailEntity loadUserByUsername(String username) {
-    return userDetailRepository.findByUsername(username);
+  public UserDetailEntity loadUserByUsername(String email) {
+    return userDetailRepository.findByEmail(email);
   }
 }

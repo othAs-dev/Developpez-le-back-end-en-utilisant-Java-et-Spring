@@ -24,18 +24,15 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SecurityController {
 
-  private AuthenticationManager authenticationManager;
-
-  private JwtEncoder jwtEncoder;
-
-  private UserDetailRepository userDetailRepository;
-
-  private UserService userService;
+  private final AuthenticationManager authenticationManager;
+  private final JwtEncoder jwtEncoder;
+  private final UserDetailRepository userDetailRepository;
+  private final UserService userService;
 
   @PostMapping("/login")
   public Map<String, String> login(@RequestBody LoginDTO loginRequest) {
     Authentication authentication = authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+      new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
     );
     Instant now = Instant.now();
     String scope = authentication.getAuthorities().stream()
@@ -44,7 +41,7 @@ public class SecurityController {
     JwtClaimsSet claims = JwtClaimsSet.builder()
       .issuedAt(now)
       .expiresAt(now.plus(10, ChronoUnit.MINUTES))
-      .subject(loginRequest.getUsername())
+      .subject(loginRequest.getEmail())
       .claim("scope", scope)
       .build();
     JwtEncoderParameters parameters = JwtEncoderParameters.from(
@@ -65,10 +62,9 @@ public class SecurityController {
     );
   }
 
-
   @GetMapping("/me")
   public UserDetailEntity getUserDetails(Authentication authentication) {
-    String username = authentication.getName();
-    return userDetailRepository.findByUsername(username);
+    String email = authentication.getName();
+    return userDetailRepository.findByEmail(email);
   }
 }
