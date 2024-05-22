@@ -26,7 +26,7 @@ public class RentalServiceImpl implements RentalService {
   @Override
   public RentalDTO addNewRental(RentalDTO rentalDTO) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    UserDetailEntity user = userDetailRepository.findByUsername(authentication.getName());
+    UserDetailEntity user = userDetailRepository.findByEmail(authentication.getName());
     rentalDTO.setOwnerId(user.getId());
 
     RentalEntity rentalEntity = RentalMapper.toEntity(rentalDTO, user);
