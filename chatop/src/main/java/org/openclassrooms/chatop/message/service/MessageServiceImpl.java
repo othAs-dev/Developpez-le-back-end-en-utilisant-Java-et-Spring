@@ -1,6 +1,7 @@
 package org.openclassrooms.chatop.message.service;
 
 import lombok.AllArgsConstructor;
+import org.openclassrooms.chatop.exceptions.ApiException;
 import org.openclassrooms.chatop.message.DTO.MessageDTO;
 import org.openclassrooms.chatop.message.entity.MessageEntity;
 import org.openclassrooms.chatop.message.mapper.MessageMapper;
@@ -33,19 +34,21 @@ public class MessageServiceImpl implements MessageService {
     UserDetailEntity user = userDetailRepository.findByUsername(authentication.getName());
     RentalEntity rental = rentalRepository.findById(rentalId).orElse(null);
 
-    if (user != null && rental != null) {
-      MessageEntity messageEntity = MessageMapper.toEntity(messageDTO, user, rental);
-      MessageEntity savedMessage = messageRepository.save(messageEntity);
-      return MessageMapper.toDTO(savedMessage);
-    }
-    return null;
+    if (user == null) throw new ApiException.NotFoundException("User not found");
+    if (rental == null) throw new ApiException.NotFoundException("Rental not found");
+
+    MessageEntity messageEntity = MessageMapper.toEntity(messageDTO, user, rental);
+    MessageEntity savedMessage = messageRepository.save(messageEntity);
+    return MessageMapper.toDTO(savedMessage);
   }
 
   @Override
   public List<MessageDTO> getAllMessages() {
     List<MessageEntity> messages = messageRepository.findAll();
+    if (messages.isEmpty()) throw new ApiException.NotFoundException("No messages found");
     return messages.stream()
       .map(MessageMapper::toDTO)
       .collect(Collectors.toList());
   }
+
 }

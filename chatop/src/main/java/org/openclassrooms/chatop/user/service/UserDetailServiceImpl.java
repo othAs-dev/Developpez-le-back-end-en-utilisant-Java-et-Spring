@@ -1,6 +1,7 @@
 package org.openclassrooms.chatop.user.service;
 
 import lombok.AllArgsConstructor;
+import org.openclassrooms.chatop.exceptions.ApiException;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ public class UserDetailServiceImpl implements UserDetailService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     UserDetailEntity user = userService.loadUserByUsername(email);
-    if (user == null) throw new UsernameNotFoundException(String.format("User with email %s not found", email));
+    if (user == null) throw new ApiException.NotFoundException(String.format("User with email %s not found", email));
     return User
       .withUsername(user.getEmail())
       .password(user.getPassword())
