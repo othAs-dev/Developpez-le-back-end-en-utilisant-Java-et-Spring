@@ -12,7 +12,7 @@ public class RentalDTO {
   private String description;
   private int surface;
   private double price;
-  private UUID ownerId;
+  private UUID owner_id;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 }

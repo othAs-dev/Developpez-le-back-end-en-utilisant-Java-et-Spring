@@ -13,9 +13,16 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+server:
+  port: 3001
+
 jwt:
   secret: ${JWT_SECRET}
 
 springdoc:
   swagger-ui:
     enabled: true
+
+
+
+

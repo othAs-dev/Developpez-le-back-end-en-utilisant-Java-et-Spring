@@ -27,7 +27,7 @@ public class RentalServiceImpl implements RentalService {
   public RentalDTO addNewRental(RentalDTO rentalDTO) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     UserDetailEntity user = userDetailRepository.findByEmail(authentication.getName());
-    rentalDTO.setOwnerId(user.getId());
+    rentalDTO.setOwner_id(user.getId());
 
     RentalEntity rentalEntity = RentalMapper.toEntity(rentalDTO, user);
     RentalEntity savedRental = rentalRepository.save(rentalEntity);

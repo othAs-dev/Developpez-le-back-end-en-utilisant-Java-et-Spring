@@ -41,8 +41,8 @@ public class SecurityConfig {
     this.userDetailServiceImpl = userDetailServiceImpl;
   }
 
-  private static final String[] WHITE_LIST_URL = {"/auth/login",
-    "/auth/register", "/v2/api-docs", "/v3/api-docs",
+  private static final String[] WHITE_LIST_URL = {"/api/auth/login",
+    "/api/auth/register", "/v2/api-docs", "/v3/api-docs",
     "/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
      "/swagger-ui/**", "/swagger-ui.html", "/api/auth/**",};
 
@@ -88,6 +88,7 @@ public class SecurityConfig {
     corsConfiguration.addAllowedOrigin("*");
     corsConfiguration.addAllowedMethod("*");
     corsConfiguration.addAllowedHeader("*");
+    corsConfiguration.addAllowedOrigin("http://localhost:4200");
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", corsConfiguration);
     return source;

@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.openclassrooms.chatop.security.DTO.LoginDTO;
 import org.openclassrooms.chatop.security.DTO.RegisterDTO;
+import org.openclassrooms.chatop.security.DTO.UserDetailDTO;
+import org.openclassrooms.chatop.security.mapper.UserDetailMapper;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 import org.openclassrooms.chatop.user.repository.UserDetailRepository;
 import org.openclassrooms.chatop.user.service.UserService;
@@ -22,7 +24,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @AllArgsConstructor
 @Tag(name = "Security")
 public class SecurityController {
@@ -61,7 +63,7 @@ public class SecurityController {
   @PostMapping("/register")
   public UserDetailEntity register(@RequestBody RegisterDTO registerRequest) {
     return userService.addNewUser(
-      registerRequest.getUsername(),
+      registerRequest.getName(),
       registerRequest.getPassword(),
       registerRequest.getEmail()
     );
@@ -69,8 +71,9 @@ public class SecurityController {
 
   @Operation(summary = "This method is used to get user details who is logged in")
   @GetMapping("/me")
-  public UserDetailEntity getUserDetails(Authentication authentication) {
+  public UserDetailDTO getUserDetails(Authentication authentication) {
     String email = authentication.getName();
-    return userDetailRepository.findByEmail(email);
+    UserDetailEntity userEntity = userDetailRepository.findByEmail(email);
+    return UserDetailMapper.toUserDetailDTO(userEntity);
   }
 }
