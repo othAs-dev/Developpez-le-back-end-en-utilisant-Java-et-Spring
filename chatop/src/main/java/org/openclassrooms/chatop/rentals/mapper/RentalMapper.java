@@ -16,8 +16,8 @@ public class RentalMapper {
     rentalDTO.setSurface(rentalEntity.getSurface());
     rentalDTO.setPrice(rentalEntity.getPrice());
     rentalDTO.setOwner_id(rentalEntity.getOwner().getId());
-    rentalDTO.setCreatedAt(rentalEntity.getCreatedAt());
-    rentalDTO.setUpdatedAt(rentalEntity.getUpdatedAt());
+    rentalDTO.setCreated_at(rentalEntity.getCreatedAt());
+    rentalDTO.setUpdated_at(rentalEntity.getUpdatedAt());
     return rentalDTO;
   }
 

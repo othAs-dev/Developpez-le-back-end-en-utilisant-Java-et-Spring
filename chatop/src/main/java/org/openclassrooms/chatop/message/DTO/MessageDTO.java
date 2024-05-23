@@ -8,6 +8,6 @@ import java.util.UUID;
 public class MessageDTO {
   private UUID id;
   private String message;
-  private UUID ownerId;
-  private UUID rentalId;
+  private UUID owner_id;
+  private UUID rental_id;
 }

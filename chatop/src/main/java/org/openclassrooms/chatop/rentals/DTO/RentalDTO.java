@@ -13,6 +13,6 @@ public class RentalDTO {
   private int surface;
   private double price;
   private UUID owner_id;
-  private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private LocalDateTime created_at;
+  private LocalDateTime updated_at;
 }
