@@ -15,9 +15,6 @@ public class ChatopApplication {
 
   @Bean
   CommandLineRunner commandLineRunnerUserDetails(UserService userService) {
-    return args -> {
-      userService.addNewUser("administrateur", "password", "admin@chatop.fr");
-      userService.addNewUser("user1", "password", "user1@chatop.fr");
-    };
+    return args -> userService.addNewUser("administrateur", "password", "admin@chatop.fr");
   }
 }
