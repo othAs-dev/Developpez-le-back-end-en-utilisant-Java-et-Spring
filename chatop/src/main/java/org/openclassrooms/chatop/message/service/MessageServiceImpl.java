@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing messages.
+ */
 @Service
 @Transactional
 @AllArgsConstructor
@@ -26,6 +29,12 @@ public class MessageServiceImpl implements MessageService {
   private final UserDetailRepository userDetailRepository;
   private final RentalRepository rentalRepository;
 
+  /**
+   * Adds a new message to the database.
+   * @param messageDTO The message to add.
+   * @return A map containing a message indicating the success of the operation.
+   * @throws ApiException.NotFoundException if the user or rental is not found.
+   */
   @Override
   public Map<String, String> addNewMessage(MessageDTO messageDTO) {
     UserDetailEntity user = userDetailRepository.findById(messageDTO.getUser_id()).orElse(null);
@@ -39,6 +48,11 @@ public class MessageServiceImpl implements MessageService {
     return Map.of("message", "Message send with success");
   }
 
+  /**
+   * Retrieves all messages from the database.
+   * @return A list of all messages.
+   * @throws ApiException.NotFoundException if no messages are found.
+   */
   @Override
   public List<MessageDTO> getAllMessages() {
     List<MessageEntity> messages = messageRepository.findAll();

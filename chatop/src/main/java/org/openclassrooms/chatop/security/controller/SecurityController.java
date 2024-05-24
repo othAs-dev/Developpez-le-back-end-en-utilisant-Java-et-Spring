@@ -31,6 +31,13 @@ public class SecurityController {
   private final UserService userService;
   private final GenerateToken generateToken;
 
+  /**
+   * Authenticates a user and generates a JWT token.
+   *
+   * @param loginRequest the login request containing the user's email and password
+   * @return a map containing the generated JWT token
+   * @throws ApiException.BadRequestException if the login fails
+   */
   @Operation(summary = "This method is used to login")
   @PostMapping("/login")
   public Map<String, String> login(@RequestBody LoginDTO loginRequest) {
@@ -46,6 +53,13 @@ public class SecurityController {
 
   }
 
+  /**
+   * Registers a new user and generates a JWT token.
+   *
+   * @param registerRequest the registration request containing the user's name, email, and password
+   * @return a map containing the generated JWT token
+   * @throws ApiException.BadRequestException if the registration fails
+   */
   @Operation(summary = "This method is used to register")
   @PostMapping("/register")
   public Map<String, String> register(@RequestBody RegisterDTO registerRequest) {
@@ -68,6 +82,13 @@ public class SecurityController {
     }
   }
 
+  /**
+   * Retrieves the details of the currently authenticated user.
+   *
+   * @param authentication the authentication object containing the user's details
+   * @return a ResponseEntity containing the UserDetailDTO of the authenticated user
+   * @throws ApiException.NotFoundException if the user is not found
+   */
   @Operation(summary = "This method is used to get user details who is logged in")
   @GetMapping("/me")
   public ResponseEntity<UserDetailDTO> getUserDetails(Authentication authentication) {

@@ -19,6 +19,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Service class for managing rentals.
+ */
 @Service
 @Transactional
 @Slf4j
@@ -52,6 +55,13 @@ public class RentalServiceImpl implements RentalService {
     }
   }
 
+  /**
+   * Updates the details of an existing rental.
+   *
+   * @param rentalDTO the new details of the rental to update
+   * @param id the ID of the rental to update
+   * @return a map containing a success message if the rental is updated successfully, otherwise an error message
+   */
   @Override
   public Map<String, String> updateRental(RentalDTO rentalDTO, Long id) {
     try {
@@ -71,6 +81,11 @@ public class RentalServiceImpl implements RentalService {
     return Map.of("error", "Rental not found.");
   }
 
+  /**
+   * Get a rental by an id.
+   * @param id The id of the rental to get.
+   * @return A map containing a message indicating the success of the operation.
+   */
   @Override
   public RentalDTO getRentalById(Long id) {
     try {
@@ -82,6 +97,10 @@ public class RentalServiceImpl implements RentalService {
     }
   }
 
+  /**
+   * Get all rentals.
+   * @return A map containing a list of all rentals.
+   */
   @Override
   public Map<String, List<RentalDTO>> getRentals() {
     try {
@@ -91,6 +110,7 @@ public class RentalServiceImpl implements RentalService {
         .toList();
       return Map.of("rentals", rentalDTOs);
     } catch (Exception e) {
+      log.error("Failed to get rentals.", e);
       return Map.of("error", List.of());
     }
   }

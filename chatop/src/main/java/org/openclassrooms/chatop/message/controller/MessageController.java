@@ -21,6 +21,11 @@ public class MessageController {
 
   private MessageService messageService;
 
+  /**
+   * Adds a new message to the database.
+   * @param messageDTO The message to add.
+   * @return A map containing a message indicating the success of the operation.
+   */
   @Operation(summary = "This method is used to add a new message")
   @PostMapping("/messages")
   public ResponseEntity<Map<String, String>> addMessage(@RequestBody MessageDTO messageDTO) {
@@ -34,6 +39,10 @@ public class MessageController {
     }
   }
 
+  /**
+   * Retrieves all messages from the database.
+   * @return A list of all messages.
+   */
   @Operation(summary = "This method is used to get all messages")
   @GetMapping("/messages")
   public ResponseEntity<List<MessageDTO>> getMessages() {

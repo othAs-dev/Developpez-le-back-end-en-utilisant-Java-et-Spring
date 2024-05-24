@@ -8,12 +8,18 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class for Swagger.
+ */
 @Configuration
 public class SwaggerConfig {
 
+  /**
+   * Customizes the OpenAPI configuration.
+   * @return The customized OpenAPI configuration.
+   */
   @Bean
   public OpenAPI customOpenAPI() {
-
     return new OpenAPI()
       .info(new Info().title("JavaInUse Authentication Service"))
       .addSecurityItem(new SecurityRequirement().addList("JavaInUseSecurityScheme"))

@@ -28,6 +28,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
 
+
+/**
+ * Configuration class for security settings.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -37,6 +41,11 @@ public class SecurityConfig {
 
   private final UserDetailService userDetailServiceImpl;
 
+  /**
+   * Constructor for SecurityConfig.
+   *
+   * @param userDetailServiceImpl the user details service implementation
+   */
   public SecurityConfig(@Lazy UserDetailService userDetailServiceImpl) {
     this.userDetailServiceImpl = userDetailServiceImpl;
   }
@@ -47,11 +56,23 @@ public class SecurityConfig {
     "/swagger-resources/**", "/configuration/ui", "/swagger-ui/**", "/swagger-ui.html", "/api/auth/**"
   };
 
+  /**
+   * Bean for password encoding.
+   *
+   * @return a BCryptPasswordEncoder instance
+   */
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
+  /**
+   * Configures the security filter chain.
+   *
+   * @param http the HttpSecurity object
+   * @return the configured SecurityFilterChain
+   * @throws Exception if an error occurs during configuration
+   */
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -64,17 +85,33 @@ public class SecurityConfig {
       .build();
   }
 
+  /**
+   * Bean for JWT encoding.
+   *
+   * @return a JwtEncoder instance
+   */
   @Bean
   public JwtEncoder jwtEncoder() {
     return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey.getBytes()));
   }
 
+  /**
+   * Bean for JWT decoding.
+   *
+   * @return a JwtDecoder instance
+   */
   @Bean
   public JwtDecoder jwtDecoder() {
     SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "RSA");
     return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS256).build();
   }
 
+  /**
+   * Bean for authentication management.
+   *
+   * @param userDetailsService the user details service
+   * @return an AuthenticationManager instance
+   */
   @Bean
   public AuthenticationManager authenticationManager(UserDetailsService userDetailsService) {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -83,6 +120,11 @@ public class SecurityConfig {
     return new ProviderManager(provider);
   }
 
+  /**
+   * Bean for CORS configuration.
+   *
+   * @return a CorsConfigurationSource instance
+   */
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration corsConfiguration = new CorsConfiguration();

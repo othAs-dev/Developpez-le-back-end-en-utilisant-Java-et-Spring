@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+/**
+ * Service class for managing users.
+ */
 @Service
 @Transactional
 @AllArgsConstructor
@@ -16,6 +19,14 @@ public class UserServiceImpl implements UserService {
   private UserDetailRepository userDetailRepository;
   private PasswordEncoder passwordEncoder;
 
+  /**
+   * Adds a new user to the database.
+   * @param username The username of the user to add.
+   * @param password The password of the user to add.
+   * @param email The email of the user to add.
+   * @return The user details.
+   * @throws ApiException.BadRequestException if the user already exists, the password is too short, or the password is too long.
+   */
   @Override
   public UserDetailEntity addNewUser(String username, String password, String email) {
     UserDetailEntity userDetailEntity = userDetailRepository.findByUsername(username);
@@ -30,6 +41,11 @@ public class UserServiceImpl implements UserService {
       return userDetailRepository.save(userDetailEntity);
   }
 
+  /**
+   * Loads a user by their email.
+   * @param email The email of the user to load.
+   * @return The user details.
+   */
   @Override
   public UserDetailEntity loadUserByUsername(String email) {
     return userDetailRepository.findByEmail(email);
