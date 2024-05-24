@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,28 +25,28 @@ public class RentalServiceImpl implements RentalService {
   private UserDetailRepository userDetailRepository;
 
   @Override
-  public RentalDTO addNewRental(RentalDTO rentalDTO) {
+  public Map<String, String> addNewRental(RentalDTO rentalDTO) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     UserDetailEntity user = userDetailRepository.findByEmail(authentication.getName());
     rentalDTO.setOwner_id(user.getId());
 
     RentalEntity rentalEntity = RentalMapper.toEntity(rentalDTO, user);
-    RentalEntity savedRental = rentalRepository.save(rentalEntity);
+    rentalRepository.save(rentalEntity);
 
-    return RentalMapper.toDTO(savedRental);
+    return Map.of("message", "Rental created !");
   }
 
   @Override
-  public RentalDTO updateRental(RentalDTO rentalDTO, UUID id) {
+  public Map<String, String> updateRental(RentalDTO rentalDTO, UUID id) {
     RentalEntity rental = rentalRepository.findById(id).orElse(null);
     if (rental != null) {
       rental.setName(rentalDTO.getName());
       rental.setDescription(rentalDTO.getDescription());
       rental.setPrice(rentalDTO.getPrice());
       rental.setSurface(rentalDTO.getSurface());
-      RentalEntity updatedRental = rentalRepository.save(rental);
+      rentalRepository.save(rental);
 
-      return RentalMapper.toDTO(updatedRental);
+      return Map.of("message", "Rental updated !");
     }
     return null;
   }

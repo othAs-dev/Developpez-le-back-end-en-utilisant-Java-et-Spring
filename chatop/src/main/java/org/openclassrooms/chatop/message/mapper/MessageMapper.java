@@ -14,7 +14,7 @@ public class MessageMapper {
     MessageDTO messageDTO = new MessageDTO();
     messageDTO.setId(messageEntity.getId());
     messageDTO.setMessage(messageEntity.getMessage());
-    messageDTO.setOwner_id(messageEntity.getOwner().getId());
+    messageDTO.setUser_id(messageEntity.getUser_id().getId());
     messageDTO.setRental_id(messageEntity.getRental().getId());
     return messageDTO;
   }
@@ -26,7 +26,7 @@ public class MessageMapper {
     MessageEntity messageEntity = new MessageEntity();
     messageEntity.setId(messageDTO.getId());
     messageEntity.setMessage(messageDTO.getMessage());
-    messageEntity.setOwner(owner);
+    messageEntity.setUser_id(owner);
     messageEntity.setRental(rental);
     return messageEntity;
   }

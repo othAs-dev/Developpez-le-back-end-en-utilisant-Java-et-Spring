@@ -9,6 +9,7 @@ import org.openclassrooms.chatop.rentals.service.RentalService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -33,13 +34,13 @@ public class RentalsController {
 
     @Operation(summary = "This method is used to add a new rental")
     @PostMapping("/rentals")
-    public RentalDTO addRental(@RequestBody RentalDTO rental) {
+    public Map<String, String> addRental(@RequestBody RentalDTO rental) {
       return rentalService.addNewRental(rental);
     }
 
     @Operation(summary = "This method is used to delete a rental")
     @PutMapping("/rentals/{id}")
-    public RentalDTO updateRental(@RequestBody RentalDTO rental, @PathVariable UUID id) {
+    public Map<String, String> updateRental(@RequestBody RentalDTO rental, @PathVariable UUID id) {
       return rentalService.updateRental(rental, id);
     }
 }

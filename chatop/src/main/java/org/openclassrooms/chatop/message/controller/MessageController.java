@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -22,15 +22,15 @@ public class MessageController {
   private MessageService messageService;
 
   @Operation(summary = "This method is used to add a new message")
-  @PostMapping("/messages/{rentalId}")
-  public ResponseEntity<MessageDTO> addMessage(@RequestBody MessageDTO messageDTO, @PathVariable UUID rentalId) {
+  @PostMapping("/messages")
+  public ResponseEntity<Map<String, String>> addMessage(@RequestBody MessageDTO messageDTO) {
     try {
-      MessageDTO addedMessage = messageService.addNewMessage(messageDTO, rentalId);
-      return ResponseEntity.ok().body(addedMessage);
+      Map<String, String> response = messageService.addNewMessage(messageDTO);
+      return ResponseEntity.ok().body(response);
     } catch (ApiException.NotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Internal server error"));
     }
   }
 
