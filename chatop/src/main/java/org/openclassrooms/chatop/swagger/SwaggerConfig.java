@@ -16,6 +16,7 @@ public class SwaggerConfig {
 
   /**
    * Customizes the OpenAPI configuration.
+   *
    * @return The customized OpenAPI configuration.
    */
   @Bean

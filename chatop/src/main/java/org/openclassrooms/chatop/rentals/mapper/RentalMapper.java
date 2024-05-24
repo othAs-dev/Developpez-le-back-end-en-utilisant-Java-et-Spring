@@ -10,6 +10,7 @@ public class RentalMapper {
 
   /**
    * Converts a RentalEntity object to a RentalDTO object.
+   *
    * @param rentalEntity The RentalEntity object to convert.
    * @return The converted RentalDTO object.
    */

@@ -23,6 +23,7 @@ public class MessageController {
 
   /**
    * Adds a new message to the database.
+   *
    * @param messageDTO The message to add.
    * @return A map containing a message indicating the success of the operation.
    */
@@ -41,6 +42,7 @@ public class MessageController {
 
   /**
    * Retrieves all messages from the database.
+   *
    * @return A list of all messages.
    */
   @Operation(summary = "This method is used to get all messages")

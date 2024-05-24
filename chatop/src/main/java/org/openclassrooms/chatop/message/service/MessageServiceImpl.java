@@ -33,6 +33,7 @@ public class MessageServiceImpl implements MessageService {
 
   /**
    * Adds a new message to the database.
+   *
    * @param messageDTO The message to add.
    * @return A map containing a message indicating the success of the operation.
    * @throws ApiException.NotFoundException if the user or rental is not found.
@@ -53,6 +54,7 @@ public class MessageServiceImpl implements MessageService {
 
   /**
    * Retrieves all messages from the database.
+   *
    * @return A list of all messages.
    * @throws ApiException.NotFoundException if no messages are found.
    */

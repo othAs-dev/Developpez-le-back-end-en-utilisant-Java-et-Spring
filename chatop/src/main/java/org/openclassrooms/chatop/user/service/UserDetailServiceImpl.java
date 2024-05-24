@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 
-
 /**
  * Service class for managing user details.
  */
@@ -21,6 +20,7 @@ public class UserDetailServiceImpl implements UserDetailService {
 
   /**
    * Loads a user by their email.
+   *
    * @param email The email of the user to load.
    * @return The user details.
    * @throws UsernameNotFoundException if the user is not found.

@@ -59,7 +59,7 @@ public class RentalServiceImpl implements RentalService {
    * Updates the details of an existing rental.
    *
    * @param rentalDTO the new details of the rental to update
-   * @param id the ID of the rental to update
+   * @param id        the ID of the rental to update
    * @return a map containing a success message if the rental is updated successfully, otherwise an error message
    */
   @Override
@@ -83,6 +83,7 @@ public class RentalServiceImpl implements RentalService {
 
   /**
    * Get a rental by an id.
+   *
    * @param id The id of the rental to get.
    * @return A map containing a message indicating the success of the operation.
    */
@@ -99,6 +100,7 @@ public class RentalServiceImpl implements RentalService {
 
   /**
    * Get all rentals.
+   *
    * @return A map containing a list of all rentals.
    */
   @Override

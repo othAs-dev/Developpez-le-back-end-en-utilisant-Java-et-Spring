@@ -23,9 +23,10 @@ public class UserServiceImpl implements UserService {
 
   /**
    * Adds a new user to the database.
+   *
    * @param username The username of the user to add.
    * @param password The password of the user to add.
-   * @param email The email of the user to add.
+   * @param email    The email of the user to add.
    * @return The user details.
    * @throws ApiException.BadRequestException if the user already exists, the password is too short, or the password is too long.
    */
@@ -33,19 +34,22 @@ public class UserServiceImpl implements UserService {
   public UserDetailEntity addNewUser(String username, String password, String email) {
     UserDetailEntity userDetailEntity = userDetailRepository.findByUsername(username);
     if (userDetailEntity != null) throw new ApiException.BadRequestException("User already exists");
-    if (password.length() < 8) throw new ApiException.BadRequestException("Password must be at least 8 characters long");
-    if (password.length() > 32) throw new ApiException.BadRequestException("Password must be at most 32 characters long");
+    if (password.length() < 8)
+      throw new ApiException.BadRequestException("Password must be at least 8 characters long");
+    if (password.length() > 32)
+      throw new ApiException.BadRequestException("Password must be at most 32 characters long");
     userDetailEntity = UserDetailEntity.builder()
       .username(username)
       .password(passwordEncoder.encode(password))
       .email(email)
       .build();
-      log.info("User saved with success");
-      return userDetailRepository.save(userDetailEntity);
+    log.info("User saved with success");
+    return userDetailRepository.save(userDetailEntity);
   }
 
   /**
    * Loads a user by their email.
+   *
    * @param email The email of the user to load.
    * @return The user details.
    */

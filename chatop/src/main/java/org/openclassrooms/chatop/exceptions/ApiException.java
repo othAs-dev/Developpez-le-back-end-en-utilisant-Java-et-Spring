@@ -8,6 +8,7 @@ public class ApiException extends RuntimeException {
 
   /**
    * Constructor for the ApiException class.
+   *
    * @param message The message to include in the exception.
    */
   public ApiException(String message) {

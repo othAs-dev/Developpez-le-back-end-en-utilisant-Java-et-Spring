@@ -42,11 +42,11 @@ public class SecurityController {
   @PostMapping("/login")
   public Map<String, String> login(@RequestBody LoginDTO loginRequest) {
     try {
-    Authentication authentication = authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
-    );
-    String jwt = generateToken.generateTokenFunction(authentication);
-    return Map.of("token", jwt);
+      Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
+      );
+      String jwt = generateToken.generateTokenFunction(authentication);
+      return Map.of("token", jwt);
     } catch (Exception e) {
       throw new ApiException.BadRequestException("Failed to login user the error is: " + e.getMessage());
     }
@@ -65,18 +65,17 @@ public class SecurityController {
   public Map<String, String> register(@RequestBody RegisterDTO registerRequest) {
 
     try {
+      userService.addNewUser(
+        registerRequest.getName(),
+        registerRequest.getPassword(),
+        registerRequest.getEmail()
+      );
 
-    userService.addNewUser(
-      registerRequest.getName(),
-      registerRequest.getPassword(),
-      registerRequest.getEmail()
-    );
-
-    Authentication authentication = authenticationManager.authenticate(
-      new UsernamePasswordAuthenticationToken(registerRequest.getEmail(), registerRequest.getPassword())
-    );
-    String jwt = generateToken.generateTokenFunction(authentication);
-    return Map.of("token", jwt);
+      Authentication authentication = authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(registerRequest.getEmail(), registerRequest.getPassword())
+      );
+      String jwt = generateToken.generateTokenFunction(authentication);
+      return Map.of("token", jwt);
     } catch (Exception e) {
       throw new ApiException.BadRequestException("Failed to register user the error is: " + e.getMessage());
     }

@@ -12,6 +12,7 @@ public class MessageMapper {
 
   /**
    * Converts a MessageEntity object to a MessageDTO object.
+   *
    * @param messageEntity The MessageEntity object to convert.
    * @return The converted MessageDTO object.
    */
@@ -29,9 +30,10 @@ public class MessageMapper {
 
   /**
    * Converts a MessageDTO object to a MessageEntity object.
+   *
    * @param messageDTO The MessageDTO object to convert.
-   * @param owner The UserDetailEntity object that owns the message.
-   * @param rental The RentalEntity object that the message is associated with.
+   * @param owner      The UserDetailEntity object that owns the message.
+   * @param rental     The RentalEntity object that the message is associated with.
    * @return The converted MessageEntity object.
    */
   public static MessageEntity toEntity(MessageDTO messageDTO, UserDetailEntity owner, RentalEntity rental) {
