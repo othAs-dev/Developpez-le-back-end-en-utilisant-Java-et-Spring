@@ -13,27 +13,38 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Objects;
+import java.util.UUID;
 
-@Service
 @Slf4j
+@Service
 public class FileStorage {
 
   @Value("${server.base-url}")
   private String serverBaseUrl;
 
+  /**
+   * Saves the image to the server and returns the path to the saved image.
+   *
+   * @param picture the image to save
+   * @return the path to the saved image
+   * @throws IOException if an error occurs while saving the image
+   */
   public String imageStorage(MultipartFile picture) throws IOException {
+    String uuid = UUID.randomUUID().toString();
+
     String fileName = StringUtils.cleanPath(Objects.requireNonNull(picture.getOriginalFilename()));
-    String uploadDir = "src/main/resources/static/pictures";
-    Path uploadPath = Paths.get(uploadDir);
+    String generatedFileName = uuid + "_" + fileName;
+
+    Path uploadPath = Paths.get("src/main/resources/static/pictures");
     if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
 
     try (InputStream inputStream = picture.getInputStream()) {
-      Path filePath = uploadPath.resolve(fileName);
+      Path filePath = uploadPath.resolve(generatedFileName);
       Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
 
       log.info("Image saved successfully");
 
-      return serverBaseUrl + "/pictures/" + fileName;
+      return serverBaseUrl + "/pictures/" + generatedFileName;
     } catch (IOException e) {
       log.error("Failed to save image", e);
       throw new IOException("Failed to save image", e);
