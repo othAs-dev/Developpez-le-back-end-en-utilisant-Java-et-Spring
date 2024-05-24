@@ -1,43 +1,86 @@
 package org.openclassrooms.chatop.rentals.service;
 
-import lombok.AllArgsConstructor;
 import org.openclassrooms.chatop.rentals.DTO.RentalDTO;
 import org.openclassrooms.chatop.rentals.entity.RentalEntity;
 import org.openclassrooms.chatop.rentals.mapper.RentalMapper;
 import org.openclassrooms.chatop.rentals.repository.RentalRepository;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 import org.openclassrooms.chatop.user.repository.UserDetailRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@AllArgsConstructor
 public class RentalServiceImpl implements RentalService {
+  @Autowired
   private RentalRepository rentalRepository;
+
+  @Autowired
   private UserDetailRepository userDetailRepository;
 
+  @Value("${server.base-url}")
+  private String serverBaseUrl;
+
+
   @Override
-  public Map<String, String> addNewRental(RentalDTO rentalDTO) {
+  public Map<String, String> addNewRental(String name, int surface, Double price, String description, MultipartFile picture) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     UserDetailEntity user = userDetailRepository.findByEmail(authentication.getName());
-    rentalDTO.setOwner_id(user.getId());
 
-    RentalEntity rentalEntity = RentalMapper.toEntity(rentalDTO, user);
-    rentalRepository.save(rentalEntity);
+    try {
+      String picturePath = savePicture(picture); // Méthode pour sauvegarder l'image et obtenir son chemin
+      RentalEntity rentalEntity = RentalEntity.builder()
+        .name(name)
+        .surface(surface)
+        .price(price)
+        .description(description)
+        .picture(picturePath)
+        .owner(user)
+        .build();
+      rentalRepository.save(rentalEntity);
 
-    return Map.of("message", "Rental created !");
+      return Map.of("message", "Rental created !");
+    } catch (IOException e) {
+      e.printStackTrace();
+      return Map.of("error", "Failed to save picture.");
+    }
+  }
+
+  private String savePicture(MultipartFile picture) throws IOException {
+    String fileName = StringUtils.cleanPath(Objects.requireNonNull(picture.getOriginalFilename()));
+    String uploadDir = "src/main/resources/static/pictures"; // Chemin de stockage des images
+    Path uploadPath = Paths.get(uploadDir);
+
+    if (!Files.exists(uploadPath)) {
+      Files.createDirectories(uploadPath);
+    }
+
+    try (InputStream inputStream = picture.getInputStream()) {
+      Path filePath = uploadPath.resolve(fileName);
+      Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+      return serverBaseUrl + "/pictures/" + fileName;
+    }
   }
 
   @Override
-  public Map<String, String> updateRental(RentalDTO rentalDTO, UUID id) {
+  public Map<String, String> updateRental(RentalDTO rentalDTO, Long id) {
     RentalEntity rental = rentalRepository.findById(id).orElse(null);
     if (rental != null) {
       rental.setName(rentalDTO.getName());
@@ -52,7 +95,7 @@ public class RentalServiceImpl implements RentalService {
   }
 
   @Override
-  public RentalDTO getRentalById(UUID id) {
+  public RentalDTO getRentalById(Long id) {
     RentalEntity rental = rentalRepository.findById(id).orElse(null);
     return RentalMapper.toDTO(rental);
   }

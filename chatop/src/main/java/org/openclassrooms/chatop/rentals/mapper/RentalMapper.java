@@ -2,9 +2,9 @@ package org.openclassrooms.chatop.rentals.mapper;
 
 import org.openclassrooms.chatop.rentals.DTO.RentalDTO;
 import org.openclassrooms.chatop.rentals.entity.RentalEntity;
-import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 
 public class RentalMapper {
+
   public static RentalDTO toDTO(RentalEntity rentalEntity) {
     if (rentalEntity == null) {
       return null;
@@ -15,23 +15,10 @@ public class RentalMapper {
     rentalDTO.setDescription(rentalEntity.getDescription());
     rentalDTO.setSurface(rentalEntity.getSurface());
     rentalDTO.setPrice(rentalEntity.getPrice());
+    rentalDTO.setPicture(rentalEntity.getPicture());
     rentalDTO.setOwner_id(rentalEntity.getOwner().getId());
     rentalDTO.setCreated_at(rentalEntity.getCreatedAt());
     rentalDTO.setUpdated_at(rentalEntity.getUpdatedAt());
     return rentalDTO;
-  }
-
-  public static RentalEntity toEntity(RentalDTO rentalDTO, UserDetailEntity owner) {
-    if (rentalDTO == null) {
-      return null;
-    }
-    RentalEntity rentalEntity = new RentalEntity();
-    rentalEntity.setId(rentalDTO.getId());
-    rentalEntity.setName(rentalDTO.getName());
-    rentalEntity.setDescription(rentalDTO.getDescription());
-    rentalEntity.setSurface(rentalDTO.getSurface());
-    rentalEntity.setPrice(rentalDTO.getPrice());
-    rentalEntity.setOwner(owner);
-    return rentalEntity;
   }
 }

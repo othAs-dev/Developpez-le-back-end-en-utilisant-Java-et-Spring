@@ -7,11 +7,12 @@ import java.util.UUID;
 
 @Data
 public class RentalDTO {
-  private UUID id;
+  private Long id;
   private String name;
   private String description;
   private int surface;
   private double price;
+  private String picture;
   private UUID owner_id;
   private LocalDateTime created_at;
   private LocalDateTime updated_at;

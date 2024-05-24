@@ -7,10 +7,10 @@ import lombok.AllArgsConstructor;
 import org.openclassrooms.chatop.rentals.DTO.RentalDTO;
 import org.openclassrooms.chatop.rentals.service.RentalService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -20,27 +20,31 @@ public class RentalsController {
 
   private RentalService rentalService;
 
-    @Operation(summary = "This method is used to get all rentals")
-    @GetMapping("/rentals")
-    public List<RentalDTO> getRentals() {
-      return rentalService.getRentals();
-    }
+  @Operation(summary = "This method is used to get all rentals")
+  @GetMapping("/rentals")
+  public List<RentalDTO> getRentals() {
+    return rentalService.getRentals();
+  }
 
-    @Operation(summary = "This method is used to get rental by id")
-    @GetMapping("/rental/{id}")
-    public RentalDTO getRentalById(@PathVariable UUID id) {
-      return rentalService.getRentalById(id);
-    }
+  @Operation(summary = "This method is used to get rental by id")
+  @GetMapping("/rental/{id}")
+  public RentalDTO getRentalById(@PathVariable Long id) {
+    return rentalService.getRentalById(id);
+  }
 
-    @Operation(summary = "This method is used to add a new rental")
-    @PostMapping("/rentals")
-    public Map<String, String> addRental(@RequestBody RentalDTO rental) {
-      return rentalService.addNewRental(rental);
-    }
+  @Operation(summary = "This method is used to add a new rental")
+  @PostMapping(value = "/rentals")
+  public Map<String, String> addRental(@RequestParam("name") String name,
+                                       @RequestParam("surface") int surface,
+                                       @RequestParam("price") Double price,
+                                       @RequestPart("picture") MultipartFile picture,
+                                       @RequestParam("description") String description) {
+    return rentalService.addNewRental(name, surface, price, description, picture);
+  }
 
-    @Operation(summary = "This method is used to delete a rental")
-    @PutMapping("/rentals/{id}")
-    public Map<String, String> updateRental(@RequestBody RentalDTO rental, @PathVariable UUID id) {
-      return rentalService.updateRental(rental, id);
-    }
+  @Operation(summary = "This method is used to delete a rental")
+  @PutMapping("/rentals/{id}")
+  public Map<String, String> updateRental(@RequestBody RentalDTO rental, @PathVariable Long id) {
+    return rentalService.updateRental(rental, id);
+  }
 }
