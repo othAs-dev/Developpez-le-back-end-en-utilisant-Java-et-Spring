@@ -15,5 +15,5 @@ public interface RentalService {
 
   RentalDTO getRentalById(Long id);
 
-  List<RentalDTO> getRentals();
+  Map<String, List<RentalDTO>> getRentals();
 }

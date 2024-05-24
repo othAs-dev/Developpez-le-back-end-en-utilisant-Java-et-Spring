@@ -22,12 +22,12 @@ public class RentalsController {
 
   @Operation(summary = "This method is used to get all rentals")
   @GetMapping("/rentals")
-  public List<RentalDTO> getRentals() {
+  public Map<String, List<RentalDTO>> getRentals() {
     return rentalService.getRentals();
   }
 
   @Operation(summary = "This method is used to get rental by id")
-  @GetMapping("/rental/{id}")
+  @GetMapping("/rentals/{id}")
   public RentalDTO getRentalById(@PathVariable Long id) {
     return rentalService.getRentalById(id);
   }
@@ -44,7 +44,17 @@ public class RentalsController {
 
   @Operation(summary = "This method is used to delete a rental")
   @PutMapping("/rentals/{id}")
-  public Map<String, String> updateRental(@RequestBody RentalDTO rental, @PathVariable Long id) {
-    return rentalService.updateRental(rental, id);
+  public Map<String, String> updateRental(@RequestParam("name") String name,
+                                          @RequestParam("surface") int surface,
+                                          @RequestParam("price") Double price,
+                                          @RequestParam("description") String description,
+                                          @PathVariable Long id) {
+    RentalDTO rentalDTO = new RentalDTO();
+    rentalDTO.setName(name);
+    rentalDTO.setSurface(surface);
+    rentalDTO.setPrice(price);
+    rentalDTO.setDescription(description);
+
+    return rentalService.updateRental(rentalDTO, id);
   }
 }
