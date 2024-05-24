@@ -1,6 +1,7 @@
 package org.openclassrooms.chatop.user.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.openclassrooms.chatop.exceptions.ApiException;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 import org.openclassrooms.chatop.user.repository.UserDetailRepository;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
   private UserDetailRepository userDetailRepository;
   private PasswordEncoder passwordEncoder;
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
       .password(passwordEncoder.encode(password))
       .email(email)
       .build();
+      log.info("User saved with success");
       return userDetailRepository.save(userDetailEntity);
   }
 

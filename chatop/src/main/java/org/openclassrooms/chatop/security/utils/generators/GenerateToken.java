@@ -14,12 +14,18 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
+
 @AllArgsConstructor
 @Service
 public class GenerateToken {
 
   private final JwtEncoder jwtEncoder;
 
+  /**
+   * Generate a token for the user.
+   * @param authentication The user authentication.
+   * @return The generated token.
+   */
   public String generateTokenFunction(Authentication authentication) {
     Instant now = Instant.now();
     String scope = authentication.getAuthorities().stream()

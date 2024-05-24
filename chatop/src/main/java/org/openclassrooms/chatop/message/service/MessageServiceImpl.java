@@ -1,6 +1,7 @@
 package org.openclassrooms.chatop.message.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.openclassrooms.chatop.exceptions.ApiException;
 import org.openclassrooms.chatop.message.DTO.MessageDTO;
 import org.openclassrooms.chatop.message.entity.MessageEntity;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @AllArgsConstructor
+@Slf4j
 public class MessageServiceImpl implements MessageService {
 
   private final MessageRepository messageRepository;
@@ -45,6 +47,7 @@ public class MessageServiceImpl implements MessageService {
 
     MessageEntity messageEntity = MessageMapper.toEntity(messageDTO, user, rental);
     messageRepository.save(messageEntity);
+    log.info("Message saved with success");
     return Map.of("message", "Message send with success");
   }
 
@@ -57,6 +60,7 @@ public class MessageServiceImpl implements MessageService {
   public List<MessageDTO> getAllMessages() {
     List<MessageEntity> messages = messageRepository.findAll();
     if (messages.isEmpty()) throw new ApiException.NotFoundException("No messages found");
+    log.info("Messages fetched with success");
     return messages.stream()
       .map(MessageMapper::toDTO)
       .collect(Collectors.toList());
