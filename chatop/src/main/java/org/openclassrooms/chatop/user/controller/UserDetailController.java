@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openclassrooms.chatop.exceptions.ApiException;
+import org.openclassrooms.chatop.user.DTO.UserDetailDTO;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
+import org.openclassrooms.chatop.user.mapper.UserDetailMapper;
 import org.openclassrooms.chatop.user.repository.UserDetailRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,10 +36,16 @@ public class UserDetailController {
    */
   @Operation(summary = "This method is used to get user details by id")
   @GetMapping("/user/{id}")
-  public ResponseEntity<UserDetailEntity> getUserDetailById(@PathVariable String id) {
+  public ResponseEntity<UserDetailDTO> getUserDetailById(@PathVariable String id) {
     try {
       Optional<UserDetailEntity> userOptional = userDetailRepository.findById(UUID.fromString(id));
-      return userOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+      if (userOptional.isPresent()) {
+        UserDetailEntity userEntity = userOptional.get();
+        UserDetailDTO userDTO = UserDetailMapper.toDTO(userEntity);
+        return ResponseEntity.ok(userDTO);
+      } else {
+        throw new ApiException.NotFoundException("User not found");
+      }
     } catch (IllegalArgumentException e) {
         log.error("Failed to get user details by id the error is: {}", e.getMessage());
         throw new ApiException.BadRequestException("Failed to get user details by id the error is: " + e.getMessage());

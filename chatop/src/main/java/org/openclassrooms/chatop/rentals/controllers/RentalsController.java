@@ -49,11 +49,12 @@ public class RentalsController {
                                           @RequestParam("price") Double price,
                                           @RequestParam("description") String description,
                                           @PathVariable Long id) {
-    RentalDTO rentalDTO = new RentalDTO();
-    rentalDTO.setName(name);
-    rentalDTO.setSurface(surface);
-    rentalDTO.setPrice(price);
-    rentalDTO.setDescription(description);
+    RentalDTO rentalDTO = RentalDTO.builder()
+      .name(name)
+      .surface(surface)
+      .price(price)
+      .description(description)
+      .build();
 
     return rentalService.updateRental(rentalDTO, id);
   }

@@ -6,10 +6,10 @@ import lombok.AllArgsConstructor;
 import org.openclassrooms.chatop.exceptions.ApiException;
 import org.openclassrooms.chatop.security.DTO.LoginDTO;
 import org.openclassrooms.chatop.security.DTO.RegisterDTO;
-import org.openclassrooms.chatop.security.DTO.UserDetailDTO;
-import org.openclassrooms.chatop.security.mapper.UserDetailMapper;
+import org.openclassrooms.chatop.user.DTO.UserDetailDTO;
 import org.openclassrooms.chatop.security.utils.generators.GenerateToken;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
+import org.openclassrooms.chatop.user.mapper.UserDetailMapper;
 import org.openclassrooms.chatop.user.repository.UserDetailRepository;
 import org.openclassrooms.chatop.user.service.UserService;
 import org.springframework.http.ResponseEntity;
@@ -97,7 +97,7 @@ public class SecurityController {
     if (userEntity == null) {
       throw new ApiException.NotFoundException("User not found");
     }
-    return ResponseEntity.ok().body(UserDetailMapper.toUserDetailDTO(userEntity));
+    return ResponseEntity.ok().body(UserDetailMapper.toDTO(userEntity));
   }
 }
 

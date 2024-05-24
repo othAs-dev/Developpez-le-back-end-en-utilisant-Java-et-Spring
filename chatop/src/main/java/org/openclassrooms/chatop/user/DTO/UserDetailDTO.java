@@ -1,5 +1,6 @@
-package org.openclassrooms.chatop.security.DTO;
+package org.openclassrooms.chatop.user.DTO;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -7,6 +8,7 @@ import java.util.UUID;
 
 
 @Data
+@Builder
 public class UserDetailDTO {
 
   private UUID id;

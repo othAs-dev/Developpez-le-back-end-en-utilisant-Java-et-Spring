@@ -19,12 +19,12 @@ public class MessageMapper {
     if (messageEntity == null) {
       return null;
     }
-    MessageDTO messageDTO = new MessageDTO();
-    messageDTO.setId(messageEntity.getId());
-    messageDTO.setMessage(messageEntity.getMessage());
-    messageDTO.setUser_id(messageEntity.getUser_id().getId());
-    messageDTO.setRental_id(messageEntity.getRental().getId());
-    return messageDTO;
+    return MessageDTO.builder()
+      .id(messageEntity.getId())
+      .message(messageEntity.getMessage())
+      .user_id(messageEntity.getUser_id().getId())
+      .rental_id(messageEntity.getRental().getId())
+      .build();
   }
 
   /**
