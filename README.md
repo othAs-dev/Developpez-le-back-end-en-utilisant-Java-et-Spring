@@ -60,7 +60,7 @@ Before starting the project, you will need to run a database for it to work. Sev
 installed on your machine and execute the following command (you can use any database credentials, 
 but make sure to use the exact same ones in the .env file you will create. There is a .env.example file provided for reference):
 ```
-docker run --name chatop-postgres -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=user -e POSTGRES_DB=chatop -p 5432:5432 -d postgres
+docker run --name chatop-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=chatop -e MYSQL_USER=user -e MYSQL_PASSWORD=pass -p 3306:3306 -d mysql:latest
 ```
 
 Remember to assign a secret key to the JWT_SECRET environment variable.
