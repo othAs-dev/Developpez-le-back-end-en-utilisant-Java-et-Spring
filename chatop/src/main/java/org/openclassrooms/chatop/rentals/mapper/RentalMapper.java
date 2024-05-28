@@ -2,36 +2,30 @@ package org.openclassrooms.chatop.rentals.mapper;
 
 import org.openclassrooms.chatop.rentals.DTO.RentalDTO;
 import org.openclassrooms.chatop.rentals.entity.RentalEntity;
-import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 
+/**
+ * Mapper class for converting RentalEntity objects to RentalDTO objects.
+ */
 public class RentalMapper {
-  public static RentalDTO toDTO(RentalEntity rentalEntity) {
-    if (rentalEntity == null) {
-      return null;
-    }
-    RentalDTO rentalDTO = new RentalDTO();
-    rentalDTO.setId(rentalEntity.getId());
-    rentalDTO.setName(rentalEntity.getName());
-    rentalDTO.setDescription(rentalEntity.getDescription());
-    rentalDTO.setSurface(rentalEntity.getSurface());
-    rentalDTO.setPrice(rentalEntity.getPrice());
-    rentalDTO.setOwnerId(rentalEntity.getOwner().getId());
-    rentalDTO.setCreatedAt(rentalEntity.getCreatedAt());
-    rentalDTO.setUpdatedAt(rentalEntity.getUpdatedAt());
-    return rentalDTO;
-  }
 
-  public static RentalEntity toEntity(RentalDTO rentalDTO, UserDetailEntity owner) {
-    if (rentalDTO == null) {
-      return null;
-    }
-    RentalEntity rentalEntity = new RentalEntity();
-    rentalEntity.setId(rentalDTO.getId());
-    rentalEntity.setName(rentalDTO.getName());
-    rentalEntity.setDescription(rentalDTO.getDescription());
-    rentalEntity.setSurface(rentalDTO.getSurface());
-    rentalEntity.setPrice(rentalDTO.getPrice());
-    rentalEntity.setOwner(owner);
-    return rentalEntity;
+  /**
+   * Converts a RentalEntity object to a RentalDTO object.
+   *
+   * @param rentalEntity The RentalEntity object to convert.
+   * @return The converted RentalDTO object.
+   */
+  public static RentalDTO toDTO(RentalEntity rentalEntity) {
+    if (rentalEntity == null) return null;
+    return RentalDTO.builder()
+      .id(rentalEntity.getId())
+      .name(rentalEntity.getName())
+      .description(rentalEntity.getDescription())
+      .surface(rentalEntity.getSurface())
+      .price(rentalEntity.getPrice())
+      .picture(rentalEntity.getPicture())
+      .owner_id(rentalEntity.getOwner().getId())
+      .created_at(rentalEntity.getCreatedAt())
+      .updated_at(rentalEntity.getUpdatedAt())
+      .build();
   }
 }

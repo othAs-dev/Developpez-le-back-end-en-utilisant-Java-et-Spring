@@ -10,4 +10,5 @@ public interface UserDetailRepository extends JpaRepository<UserDetailEntity, UU
 
   UserDetailEntity findByEmail(String email);
 
+
 }

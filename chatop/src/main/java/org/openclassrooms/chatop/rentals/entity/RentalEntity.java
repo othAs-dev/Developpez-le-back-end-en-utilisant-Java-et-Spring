@@ -8,7 +8,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.openclassrooms.chatop.user.entity.UserDetailEntity;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +21,7 @@ public class RentalEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
-  private UUID id;
+  private Long id;
 
   @Column(name = "name", unique = true)
   @Size(min = 2, max = 32)
@@ -37,6 +36,9 @@ public class RentalEntity {
 
   @Column(name = "price")
   private double price;
+
+  @Column(name = "picture")
+  private String picture;
 
   @ManyToOne
   @JoinColumn(name = "owner_id", nullable = false)

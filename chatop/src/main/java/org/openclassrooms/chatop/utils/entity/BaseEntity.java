@@ -1,4 +1,4 @@
-package utils.entity;
+package org.openclassrooms.chatop.utils.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -18,7 +18,7 @@ public abstract class BaseEntity {
 
   @Column(updatable = false)
   @CreationTimestamp
-  private LocalDateTime createdAt;
+  private LocalDateTime created_at;
   @UpdateTimestamp
-  private LocalDateTime updatedAt;
+  private LocalDateTime updated_at;
 }

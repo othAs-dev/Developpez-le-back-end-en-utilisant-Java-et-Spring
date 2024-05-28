@@ -1,18 +1,19 @@
 package org.openclassrooms.chatop.rentals.service;
 
 import org.openclassrooms.chatop.rentals.DTO.RentalDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 public interface RentalService {
 
-  RentalDTO addNewRental(RentalDTO rental);
+  Map<String, String> addNewRental(String name, int surface, Double price, String description, MultipartFile picture);
 
 
-  RentalDTO updateRental(RentalDTO rental, UUID id);
+  Map<String, String> updateRental(RentalDTO rental, Long id);
 
-  RentalDTO getRentalById(UUID id);
+  RentalDTO getRentalById(Long id);
 
-  List<RentalDTO> getRentals();
+  Map<String, List<RentalDTO>> getRentals();
 }

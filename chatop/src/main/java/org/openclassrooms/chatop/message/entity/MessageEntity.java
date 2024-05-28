@@ -25,8 +25,8 @@ public class MessageEntity {
     private String message;
 
     @ManyToOne
-    @JoinColumn(name = "ownerId", nullable = false)
-    private UserDetailEntity owner;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserDetailEntity user_id;
 
     @OneToOne
     @JoinColumn(name = "rental_id", nullable = false)
