@@ -2,19 +2,22 @@ spring:
   application:
     name: chatop
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/chatop
-    username: ${USERNAME_POSTGRES}
-    password: ${PASSWORD_POSTGRES}
-  sql:
-    init:
-      mode: always
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/chatop
+    username: ${USERNAME_MYSQL}
+    password: ${PASSWORD_MYSQL}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
   servlet:
     multipart:
       max-file-size: 5MB
+  #https://stackoverflow.com/a/49959999/19836258 for the following configuration of web resources
   web:
     resources:
       static-locations[0]: file:src/main/resources/static/
