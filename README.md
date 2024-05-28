@@ -59,7 +59,8 @@ SQL script for creating the schema is available `ressources/sql/script.sql`
 Before starting the project, you will need to run a database for it to work. Several approaches are possible, but the one I recommend is to ensure you have Docker 
 installed on your machine and execute the following command (you can use any database credentials, 
 but make sure to use the exact same ones in the .env file you will create. There is a .env.example file provided for reference):
-```docker run --name chatop-postgres -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=user -e POSTGRES_DB=chatop -p 5432:5432 -d postgres
+```
+docker run --name chatop-postgres -e POSTGRES_PASSWORD=pass -e POSTGRES_USER=user -e POSTGRES_DB=chatop -p 5432:5432 -d postgres
 ```
 
 Remember to assign a secret key to the JWT_SECRET environment variable.
