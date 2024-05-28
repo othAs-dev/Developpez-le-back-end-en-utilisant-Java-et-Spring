@@ -9,5 +9,5 @@ public interface MessageService {
 
   Map<String, String> addNewMessage(MessageDTO messageDTO);
 
-  List<MessageDTO> getAllMessages();
+  //List<MessageDTO> getAllMessages();
 }

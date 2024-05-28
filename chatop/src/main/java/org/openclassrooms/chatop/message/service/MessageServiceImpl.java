@@ -58,14 +58,14 @@ public class MessageServiceImpl implements MessageService {
    * @return A list of all messages.
    * @throws ApiException.NotFoundException if no messages are found.
    */
-  @Override
-  public List<MessageDTO> getAllMessages() {
-    List<MessageEntity> messages = messageRepository.findAll();
-    if (messages.isEmpty()) throw new ApiException.NotFoundException("No messages found");
-    log.info("Messages fetched with success");
-    return messages.stream()
-      .map(MessageMapper::toDTO)
-      .collect(Collectors.toList());
-  }
+//  @Override
+//  public List<MessageDTO> getAllMessages() {
+//    List<MessageEntity> messages = messageRepository.findAll();
+//    if (messages.isEmpty()) throw new ApiException.NotFoundException("No messages found");
+//    log.info("Messages fetched with success");
+//    return messages.stream()
+//      .map(MessageMapper::toDTO)
+//      .collect(Collectors.toList());
+//  }
 
 }

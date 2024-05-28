@@ -45,16 +45,16 @@ public class MessageController {
    *
    * @return A list of all messages.
    */
-  @Operation(summary = "This method is used to get all messages")
-  @GetMapping("/messages")
-  public ResponseEntity<List<MessageDTO>> getMessages() {
-    try {
-      List<MessageDTO> messages = messageService.getAllMessages();
-      return ResponseEntity.ok().body(messages);
-    } catch (ApiException.NotFoundException e) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
-  }
+//  @Operation(summary = "This method is used to get all messages")
+//  @GetMapping("/messages")
+//  public ResponseEntity<List<MessageDTO>> getMessages() {
+//    try {
+//      List<MessageDTO> messages = messageService.getAllMessages();
+//      return ResponseEntity.ok().body(messages);
+//    } catch (ApiException.NotFoundException e) {
+//      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//    } catch (Exception e) {
+//      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//    }
+//  }
 }
