@@ -71,7 +71,14 @@ If you don't, you will encounter this error:
 
 To generate a secret, you have several options. The simplest is to enter this command in your terminal:
 
-```node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"``` or ```openssl rand  -base64 32``` or visit https://www.grc.com/passwords.htm
+```
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+or 
+```
+openssl rand  -base64 32
+```
+or visit : https://www.grc.com/passwords.htm
 
 
 
